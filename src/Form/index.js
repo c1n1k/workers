@@ -14,6 +14,10 @@ ReactModal.defaultStyles.content = {
 };
 
 export default class Add extends Component {
+  componentWillMount() {
+    ReactModal.setAppElement("body");
+  }
+
   save = event => {
     event.preventDefault();
 
@@ -31,10 +35,6 @@ export default class Add extends Component {
 
     this.props.onClose(list);
   };
-
-  componentWillMount() {
-    ReactModal.setAppElement("#root");
-  }
 
   render() {
     const data = this.props.data || {};
