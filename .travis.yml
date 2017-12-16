@@ -11,9 +11,15 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - npm install -g now
+
 before_deploy:
   - yarn run build
 
-branches:
-  only:
-    - master
+deploy:
+  provider: script
+  script: now build --public --token $NOW_TOKEN --name $URL_PRODUCTION && now alias --token $NOW_TOKEN --force
+  on:
+    branch: room
+  skip_cleanup: true

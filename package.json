@@ -18,5 +18,9 @@
   },
   "devDependencies": {
     "jest-localstorage-mock": "^2.1.0"
+  },
+  "now": {
+    "name": "workers",
+    "alias": "denisov-workers"
   }
 }
