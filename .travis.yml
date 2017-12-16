@@ -19,7 +19,7 @@ before_deploy:
 
 deploy:
   provider: script
-  script: now alias $(now build -t=$NOW_TOKEN --public) $URL_PRODUCTION -t=$NOW_TOKEN
+  script: now build --public --token $NOW_TOKEN --name $URL_PRODUCTION && now alias --token $NOW_TOKEN --force
   on:
     branch: master
   skip_cleanup: true
