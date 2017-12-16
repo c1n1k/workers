@@ -12,9 +12,12 @@ ReactModal.defaultStyles.content = {
   border: "none",
   backgroundColor: "#fff"
 };
-ReactModal.setAppElement("#root");
 
 export default class Add extends Component {
+  componentWillMount() {
+    ReactModal.setAppElement("body");
+  }
+
   save = event => {
     event.preventDefault();
 
