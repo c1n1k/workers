@@ -5,3 +5,5 @@
 `yarn start` для запуска режима разработки
 
 `yarn build` для сборки
+
+deploy
