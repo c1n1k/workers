@@ -9,5 +9,3 @@
 `yarn build` для сборки
 
 deploy on [denisov-workers.now.sh](https://denisov-workers.now.sh/)
-
-test
