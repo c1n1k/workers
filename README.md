@@ -8,4 +8,4 @@
 
 `yarn build` для сборки
 
-deploy
+deploy on denisov-workers.now.sh
