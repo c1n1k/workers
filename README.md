@@ -10,4 +10,4 @@
 
 deploy on [denisov-workers.now.sh](https://denisov-workers.now.sh/)
 
-testing stage-ci
+testing stage-ci we
