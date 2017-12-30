@@ -10,6 +10,6 @@
 
 deploy on [denisov-workers.now.sh](https://denisov-workers.now.sh/)
 
-testing stage-ci sasd
+testing stage-ci
 
 heroku
