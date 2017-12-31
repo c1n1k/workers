@@ -4,6 +4,7 @@
   "env": {},
   "formation": {},
   "addons": [],
+  "repository": "https://github.com/c1n1k/workers",
   "buildpacks": [
     {
       "url": "https://github.com/mars/create-react-app-buildpack.git"
