@@ -9,7 +9,10 @@
 `yarn build` для сборки
 
 deploy on [denisov-workers.now.sh](https://denisov-workers.now.sh/)
+deploy on [https://denisov-workers.herokuapp.com/](https://denisov-workers.herokuapp.com/)
 
 testing stage-ci
 
 heroku
+
+test test
