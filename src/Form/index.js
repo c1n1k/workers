@@ -4,6 +4,8 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 import Textarea from "../UI/Textarea";
 import ReactModal from "react-modal";
+import { add, edit } from "./action.js";
+import { connect } from "react-redux";
 
 ReactModal.defaultStyles.content = {
   margin: "40px auto",
@@ -13,38 +15,42 @@ ReactModal.defaultStyles.content = {
   backgroundColor: "#fff"
 };
 
-export default class Add extends Component {
+class Add extends Component {
   componentWillMount() {
     ReactModal.setAppElement("body");
   }
 
-  save = event => {
+  onSave = event => {
     event.preventDefault();
 
     const index = this.props.index;
-    const list = JSON.parse(localStorage.getItem("list")) || [];
 
     const data = {};
     const formData = new FormData(event.target);
+
     for (const pair of formData.entries()) {
       data[pair[0]] = pair[1];
+      index
+        ? (data.id = this.props.list[this.props.index].id)
+        : (data.id = Date.now());
     }
 
-    index ? (list[index] = data) : list.push(data);
-    localStorage.setItem("list", JSON.stringify(list));
+    index
+      ? this.props.dispatch(edit(index, data))
+      : this.props.dispatch(add(data));
 
-    this.props.onClose(list);
+    this.props.onClose();
   };
 
   render() {
-    const data = this.props.data || {};
+    const data = this.props.list[this.props.index] || {};
     return (
       <ReactModal isOpen={this.props.isOpen}>
         <Wrap>
           <button type="button" onClick={this.props.onClose}>
             Закрыть
           </button>
-          <Form action="" onSubmit={this.save}>
+          <Form action="" onSubmit={this.onSave}>
             <Row>
               <Label htmlFor="surname">Фамилия</Label>
               <Input
@@ -93,3 +99,11 @@ export default class Add extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    list: state
+  };
+}
+
+export default connect(mapStateToProps)(Add);

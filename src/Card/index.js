@@ -3,23 +3,15 @@ import Button from "../UI/Button";
 import Inner from "../UI/Inner";
 import { Wrap, Row, Term, Desc, Actions } from "./styled";
 import Form from "../Form";
+import { connect } from "react-redux";
 
-export default class Card extends Component {
+class Card extends Component {
   initialState = {
     isOpen: false,
-    index: this.props.match.params.id,
-    list: JSON.parse(localStorage.getItem("list")) || []
+    index: this.props.match.params.id
   };
 
   state = this.initialState;
-
-  componentWillMount() {
-    const index = this.state.index;
-
-    this.setState({
-      data: this.initialState.list[index]
-    });
-  }
 
   back = e => {
     e.stopPropagation();
@@ -27,29 +19,21 @@ export default class Card extends Component {
   };
 
   handleOpenModal = event => {
-    const id = event.target.getAttribute("id");
-
     this.setState({
-      showModal: true,
-      selected: id
+      ...this.setState,
+      isOpen: true
     });
   };
 
   handleCloseModal = () => {
-    const newList = JSON.parse(localStorage.getItem("list")) || [];
-    this.setState(
-      {
-        showModal: false,
-        data: newList[this.state.index]
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+    this.setState({
+      ...this.setState,
+      isOpen: false
+    });
   };
 
   render() {
-    const data = this.state.data;
+    const data = this.props.list[this.state.index];
     return (
       <Inner>
         <Wrap>
@@ -77,12 +61,19 @@ export default class Card extends Component {
           </Button>
         </Actions>
         <Form
-          isOpen={this.state.showModal}
+          isOpen={this.state.isOpen}
           index={this.state.index}
-          data={this.state.list[this.state.index]}
           onClose={this.handleCloseModal}
         />
       </Inner>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    list: state
+  };
+}
+
+export default connect(mapStateToProps)(Card);
