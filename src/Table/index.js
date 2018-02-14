@@ -14,49 +14,44 @@ import {
 } from "./styled";
 import Button from "../UI/Button";
 import Form from "../Form";
+import { connect } from "react-redux";
 
-export default class Table extends Component {
+class Table extends Component {
   initialState = {
     showModal: false,
-    list: JSON.parse(localStorage.getItem("list")) || []
+    index: null
   };
 
   state = this.initialState;
 
   handleOpenModal = event => {
-    const id = event.target.getAttribute("id");
+    const index = event.target.getAttribute("id");
 
     this.setState({
       showModal: true,
-      selected: id
+      index: index
     });
   };
 
   handleCloseForm = () => {
-    const newList = JSON.parse(localStorage.getItem("list")) || [];
     this.setState({
-      showModal: false,
-      list: newList
+      ...this.state,
+      showModal: false
     });
   };
 
   render() {
-    const items = this.state.list.map((item, id) => {
+    const items = this.props.list.map((item, index) => {
       if (item) {
         return (
-          <Row key={id}>
-            <CardLink to={"/card/" + id}>
+          <Row key={index}>
+            <CardLink to={"/card/" + index}>
               <Cell>{item.surname}</Cell>
               <Cell>{item.name}</Cell>
               <Cell>{item.position}</Cell>
             </CardLink>
             <Actions>
-              <Button
-                type="button"
-                data={item}
-                id={id}
-                onClick={this.handleOpenModal}
-              >
+              <Button type="button" id={index} onClick={this.handleOpenModal}>
                 Редактировать
               </Button>
             </Actions>
@@ -85,11 +80,18 @@ export default class Table extends Component {
         </Wrap>
         <Form
           isOpen={this.state.showModal}
-          index={this.state.selected}
-          data={this.state.list[this.state.selected]}
+          index={this.state.index}
           onClose={this.handleCloseForm}
         />
       </Inner>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    list: state
+  };
+}
+
+export default connect(mapStateToProps)(Table);
